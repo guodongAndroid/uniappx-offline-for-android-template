@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <!--   value 替换成你应用的appid    -->
+        <meta-data
+            android:name="DCLOUD_UNI_APPID"
+            android:value="__UNI__2A7E9F3" />
+    </application>
+</manifest>

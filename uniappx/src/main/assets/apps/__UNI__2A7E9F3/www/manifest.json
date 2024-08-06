@@ -1,0 +1,28 @@
+{
+  "id": "__UNI__2A7E9F3",
+  "name": "uni-app-x-offline-demo",
+  "description": "",
+  "version": {
+    "name": "1.0.0",
+    "code": "100"
+  },
+  "uni-app-x": {
+    "compilerVersion": "4.24"
+  },
+  "app": {
+    "distribute": {
+      "icons": {
+        "android": {
+          "hdpi": "",
+          "xhdpi": "",
+          "xxhdpi": "",
+          "xxxhdpi": ""
+        }
+      },
+      "modules": {
+        "uni-exit": {},
+        "uni-prompt": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+
+    id 'io.dcloud.uts.kotlin'
+}
+
+android {
+    namespace 'com.guodong.uniappx.kux_request'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 21
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    /*implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material*/
+
+    compileOnly fileTree(include: ['*.aar'], dir: '../libs')
+    compileOnly fileTree(include: ['*.aar'], dir: './libs')
+    compileOnly "com.alibaba:fastjson:1.2.83"
+    compileOnly "androidx.core:core-ktx:1.10.1"
+    compileOnly 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8'
+    compileOnly 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.8'
+
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+}
