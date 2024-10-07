@@ -1,4 +1,4 @@
-@file:Suppress("UNCHECKED_CAST", "USELESS_CAST", "INAPPLICABLE_JVM_NAME")
+@file:Suppress("UNCHECKED_CAST", "USELESS_CAST", "INAPPLICABLE_JVM_NAME", "UNUSED_ANONYMOUS_PARAMETER")
 package uni.UNI2A7E9F3;
 import io.dcloud.uniapp.*;
 import io.dcloud.uniapp.extapi.*;
@@ -14,26 +14,25 @@ import kotlinx.coroutines.CoroutineScope;
 import kotlinx.coroutines.Deferred;
 import kotlinx.coroutines.Dispatchers;
 import kotlinx.coroutines.async;
-import io.dcloud.uniapp.appframe.AppConfig;
 import io.dcloud.uniapp.extapi.exit as uni_exit;
 import io.dcloud.uniapp.extapi.showToast as uni_showToast;
 import uts.sdk.modules.kuxRequest.useRequest;
 import uts.sdk.modules.kuxRequest.UseOptions;
 var firstBackTime: Number = 0;
 open class GenApp : BaseApp {
-    constructor(instance: ComponentInternalInstance) : super(instance) {
+    constructor(__ins: ComponentInternalInstance) : super(__ins) {
         onLaunch(fun(_: OnLaunchOptions) {
             console.log("App Launch", " at App.uvue:5");
         }
-        , instance);
+        , __ins);
         onAppShow(fun(_: OnShowOptions) {
             console.log("App Show", " at App.uvue:8");
         }
-        , instance);
+        , __ins);
         onHide(fun() {
             console.log("App Hide", " at App.uvue:11");
         }
-        , instance);
+        , __ins);
         onLastPageBackPress(fun() {
             console.log("App LastPageBackPress", " at App.uvue:15");
             if (firstBackTime == 0) {
@@ -47,11 +46,11 @@ open class GenApp : BaseApp {
                 uni_exit(null);
             }
         }
-        , instance);
+        , __ins);
         onExit(fun() {
             console.log("App Exit", " at App.uvue:32");
         }
-        , instance);
+        , __ins);
     }
     companion object {
         val styles: Map<String, Map<String, Map<String, Any>>>
@@ -83,31 +82,34 @@ val GenPagesIndexIndexClass = CreateVueComponent(GenPagesIndexIndex::class.java,
 );
 fun createApp(): UTSJSONObject {
     val app = createSSRApp(GenAppClass);
-    return object : UTSJSONObject() {
-        var app = app
-    };
+    return UTSJSONObject(Map<String, Any?>(utsArrayOf(
+        utsArrayOf(
+            "app",
+            app
+        )
+    )));
 }
 fun main(app: IApp) {
     definePageRoutes();
     defineAppConfig();
     (createApp()["app"] as VueApp).mount(app);
 }
-open class UniAppConfig : AppConfig {
+open class UniAppConfig : io.dcloud.uniapp.appframe.AppConfig {
     override var name: String = "uni-app-x-offline-demo";
     override var appid: String = "__UNI__2A7E9F3";
     override var versionName: String = "1.0.0";
     override var versionCode: String = "100";
-    override var uniCompilerVersion: String = "4.24";
-    constructor(){}
+    override var uniCompilerVersion: String = "4.29";
+    constructor() : super() {}
 }
 fun definePageRoutes() {
-    __uniRoutes.push(PageRoute(path = "pages/index/index", component = GenPagesIndexIndexClass, meta = PageMeta(isQuit = true), style = utsMapOf("navigationBarTitleText" to "uni-app x")));
+    __uniRoutes.push(UniPageRoute(path = "pages/index/index", component = GenPagesIndexIndexClass, meta = UniPageMeta(isQuit = true), style = utsMapOf("navigationBarTitleText" to "uni-app x offline")));
 }
 val __uniTabBar: Map<String, Any?>? = null;
-val __uniLaunchPage: Map<String, Any?> = utsMapOf("url" to "pages/index/index", "style" to utsMapOf("navigationBarTitleText" to "uni-app x"));
+val __uniLaunchPage: Map<String, Any?> = utsMapOf("url" to "pages/index/index", "style" to utsMapOf("navigationBarTitleText" to "uni-app x offline"));
 fun defineAppConfig() {
     __uniConfig.entryPagePath = "/pages/index/index";
-    __uniConfig.globalStyle = utsMapOf("navigationBarTextStyle" to "black", "navigationBarTitleText" to "uni-app x", "navigationBarBackgroundColor" to "#F8F8F8", "backgroundColor" to "#F8F8F8");
+    __uniConfig.globalStyle = utsMapOf("navigationBarTextStyle" to "black", "navigationBarTitleText" to "uni-app x offline", "navigationBarBackgroundColor" to "#F8F8F8", "backgroundColor" to "#F8F8F8");
     __uniConfig.tabBar = __uniTabBar as Map<String, Any>?;
     __uniConfig.conditionUrl = "";
     __uniConfig.uniIdRouter = utsMapOf();

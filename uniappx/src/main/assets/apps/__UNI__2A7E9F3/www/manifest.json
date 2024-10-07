@@ -7,7 +7,7 @@
     "code": "100"
   },
   "uni-app-x": {
-    "compilerVersion": "4.24"
+    "compilerVersion": "4.29"
   },
   "app": {
     "distribute": {
@@ -21,7 +21,9 @@
       },
       "modules": {
         "uni-exit": {},
-        "uni-prompt": {}
+        "uni-prompt": {},
+        "uni-network": {},
+        "uni-video": {}
       }
     }
   }

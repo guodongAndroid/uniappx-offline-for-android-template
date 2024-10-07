@@ -1,4 +1,4 @@
-@file:Suppress("UNCHECKED_CAST", "USELESS_CAST", "INAPPLICABLE_JVM_NAME")
+@file:Suppress("UNCHECKED_CAST", "USELESS_CAST", "INAPPLICABLE_JVM_NAME", "UNUSED_ANONYMOUS_PARAMETER")
 package uni.UNI2A7E9F3;
 import io.dcloud.uniapp.*;
 import io.dcloud.uniapp.extapi.*;
@@ -15,8 +15,8 @@ import kotlinx.coroutines.Deferred;
 import kotlinx.coroutines.Dispatchers;
 import kotlinx.coroutines.async;
 open class GenPagesIndexIndex : BasePage {
-    constructor(instance: ComponentInternalInstance) : super(instance) {
-        onLoad(fun(_: OnLoadOptions) {}, instance);
+    constructor(__ins: ComponentInternalInstance) : super(__ins) {
+        onLoad(fun(_: OnLoadOptions) {}, __ins);
     }
     @Suppress("UNUSED_PARAMETER", "UNUSED_VARIABLE")
     override fun `$render`(): Any? {
@@ -28,7 +28,7 @@ open class GenPagesIndexIndex : BasePage {
                 createElementVNode("text", utsMapOf("class" to "title"), toDisplayString(_ctx.title), 1),
                 createElementVNode("text", utsMapOf("class" to "title"), "uni-app x offline for android")
             )),
-            createElementVNode("video", utsMapOf("controls" to "true", "show-fullscreen-btn" to "true", "show-center-play-btn" to "true", "show-play-btn" to "true", "show-progress" to "true", "src" to "https://pan.sunxiaodou.com/api/raw/?path=/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/Spring/07-Spring-Bean%E7%9A%84%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8.mp4"))
+            createElementVNode("video", utsMapOf("controls" to "true", "show-fullscreen-btn" to "true", "show-center-play-btn" to "true", "show-play-btn" to "true", "show-progress" to "true", "src" to "https://qiniu-web-assets.dcloud.net.cn/video/sample/2minute-demo.mp4"))
         ));
     }
     open var title: String by `$data`;
