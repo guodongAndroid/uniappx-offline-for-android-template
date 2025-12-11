@@ -10,6 +10,7 @@ import io.dcloud.uts.*
 import io.dcloud.uts.Map
 import io.dcloud.uts.Set
 import io.dcloud.uts.UTSAndroid
+import kotlin.properties.Delegates
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -92,7 +93,7 @@ open class Interceptors (
         return InterceptorsReactiveObject(this, __v_isReadonly, __v_isShallow, __v_skip)
     }
 }
-open class InterceptorsReactiveObject : Interceptors, IUTSReactive<Interceptors> {
+class InterceptorsReactiveObject : Interceptors, IUTSReactive<Interceptors> {
     override var __v_raw: Interceptors
     override var __v_isReadonly: Boolean
     override var __v_isShallow: Boolean
@@ -249,7 +250,7 @@ open class State (
         return StateReactiveObject(this, __v_isReadonly, __v_isShallow, __v_skip)
     }
 }
-open class StateReactiveObject : State, IUTSReactive<State> {
+class StateReactiveObject : State, IUTSReactive<State> {
     override var __v_raw: State
     override var __v_isReadonly: Boolean
     override var __v_isShallow: Boolean
@@ -356,7 +357,7 @@ open class RequestFilters {
                 }
                 if (this.pendingRequests.has(key)) {
                     if (this.debug) {
-                        console.warn("\u3010 kux-request:filterRequest\u3011\u8BF7\u6C42key " + key + " \u5DF2\u5B58\u5728\uFF0C\u672C\u6B21\u8BF7\u6C42\u5DF2\u81EA\u52A8\u8FC7\u6EE4")
+                        console.warn("【 kux-request:filterRequest】请求key " + key + " 已存在，本次请求已自动过滤")
                     }
                     return@w this.pendingRequests.get(key)!!
                 }
@@ -394,11 +395,11 @@ open class URLSearchParams {
     }
 }
 open class URL {
-    open var protocol: String
-    open var host: String
-    open var pathname: String
-    open var search: String
-    open var searchParams: URLSearchParams
+    open lateinit var protocol: String
+    open lateinit var host: String
+    open lateinit var pathname: String
+    open lateinit var search: String
+    open lateinit var searchParams: URLSearchParams
     constructor(url: String){
         val urlRegex = UTSRegExp("^(\\w+):\\/\\/([^\\/?#]+)([^?#]*)(\\?[^#]*)?(#.*)?\$", "")
         val match = url.match(urlRegex)
@@ -510,8 +511,8 @@ open class Request {
     private var baseURL: String
     private var config: UseOptions
     private var requestFilters: RequestFilters
-    open var requestTask: RequestTask?
-    open var beforeSendOptions: RequestConfig?
+    open var requestTask: RequestTask? = null
+    open var beforeSendOptions: RequestConfig? = null
     private var _cache: Map<String, Any>
     private var isCache: Boolean
     private var cacheKey: String
@@ -664,7 +665,7 @@ open class Request {
                     }
                     if (this.isCache) {
                         if (mergedOptions.debug != null && mergedOptions.debug as Boolean) {
-                            console.warn("\u3010kux-request:request\u3011\u672C\u6B21\u8BF7\u6C42 " + _cacheKey + " \u4E3A\u7F13\u5B58\u7ED3\u679C")
+                            console.warn("【kux-request:request】本次请求 " + _cacheKey + " 为缓存结果")
                         }
                         this.isCache = false
                         if (this._cache.get(_cacheKey) != null) {
@@ -842,9 +843,9 @@ open class RetryManager : Request {
             timeout = parseInt("" + options.timeout!!)
         }
         fun doRequest(): UTSPromise<Any> {
-            return wrapUTSPromise(suspend w@{
+            return wrapUTSPromise(suspend w1@{
                     try {
-                        return@w await(_this.request(url, options ?: RequestConfig()))
+                        return@w1 await(_this.request(url, options ?: RequestConfig()))
                     }
                      catch (error: Throwable) {
                         if (delay >= timeout) {
@@ -852,10 +853,10 @@ open class RetryManager : Request {
                         }
                         if (retryCount < _this.maxRetryCount) {
                             retryCount++
-                            console.warn("\u8BF7\u6C42\u5931\u8D25\uFF0C\u6B63\u5728\u5C1D\u8BD5\u91CD\u8BD5\uFF08" + retryCount + "\uFF09")
+                            console.warn("请求失败，正在尝试重试（" + retryCount + "）")
                             await(Utils().sleep(delay))
                             delay = Math.min(delay * 2, _this.maxDelay)
-                            return@w doRequest()
+                            return@w1 doRequest()
                         } else {
                             val fail = KuxFailImpl(900500)
                             fail.cause = UniError(JSON.stringify(error))

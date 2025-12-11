@@ -10,6 +10,7 @@ import io.dcloud.uts.*
 import io.dcloud.uts.Map
 import io.dcloud.uts.Set
 import io.dcloud.uts.UTSAndroid
+import kotlin.properties.Delegates
 import io.dcloud.uniapp.extapi.exit as uni_exit
 import io.dcloud.uniapp.extapi.showToast as uni_showToast
 import uts.sdk.modules.kuxRequest.useRequest
@@ -94,7 +95,7 @@ open class UniAppConfig : io.dcloud.uniapp.appframe.AppConfig {
     override var appid: String = "__UNI__2A7E9F3"
     override var versionName: String = "1.0.0"
     override var versionCode: String = "100"
-    override var uniCompilerVersion: String = "4.75"
+    override var uniCompilerVersion: String = "4.87"
     constructor() : super() {}
 }
 fun definePageRoutes() {
